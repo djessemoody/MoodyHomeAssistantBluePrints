@@ -29,6 +29,7 @@ blueprint:
         number:
           min: 0
           max: 100
+          unit_of_measurement: "%"
 variables:
   humidity_sensor: !input "humidity_sensor"
   target_fan: !input "target_fan"
