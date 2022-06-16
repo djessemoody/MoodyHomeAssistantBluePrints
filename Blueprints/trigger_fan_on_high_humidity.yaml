@@ -22,6 +22,7 @@ blueprint:
         number:
           min: 0
           max: 100
+          unit_of_measurement: "%"
     off_threshold:
       name: Off Threshold Value
       description: Humidity % you want the fan of.
