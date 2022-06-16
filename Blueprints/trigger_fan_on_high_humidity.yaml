@@ -39,7 +39,7 @@ variables:
 trigger:
   - platform: numeric_state
     entity_id: !input humidity_sensor
-    below: !input off_threshold
+    above: !input on_threshold
 condition: []
 action:
   - service: switch.turn_on
