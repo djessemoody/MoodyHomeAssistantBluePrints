@@ -1,0 +1,51 @@
+blueprint:
+  name: Trigger Fan On High Humidity
+  description: Turns a Fan on in high humidity situations, envisioned as a bathroom fan switch.
+  domain: automation
+  input:
+    humidity_sensor:
+      name: Humidity Sesnor
+      description: The Sensor to trigger the fan.
+      selector:
+        entity:
+          domain: sensor
+    target_fan:
+      name: Fan to Turn on
+      description: The fan desired to turn on.
+      selector:
+        entity:
+          domain: switch
+    on_threshold:
+      name: On Threshold Value
+      description: Humidity % you want the fan on.
+      selector:
+        number:
+          min: 0
+          max: 100
+    off_threshold:
+      name: Off Threshold Value
+      description: Humidity % you want the fan of.
+      selector:
+        number:
+          min: 0
+          max: 100
+variables:
+  humidity_sensor: !input "humidity_sensor"
+  target_fan: !input "target_fan"
+  on_threshold: !input "on_threshold"
+  off_threshold: !input "off_threshold"
+trigger:
+  - platform: numeric_state
+    entity_id: !input humidity_sensor
+    below: !input off_threshold
+condition: []
+action:
+  - service: switch.turn_on
+    entity_id: !input target_fan
+  - wait_for_trigger:
+      - platform: numeric_state
+        entity_id: !input humidity_sensor
+        below: !input off_threshold
+  - service: switch.turn_off
+    entity_id: !input target_fan
+mode: single
