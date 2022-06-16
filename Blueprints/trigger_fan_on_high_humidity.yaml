@@ -4,7 +4,7 @@ blueprint:
   domain: automation
   input:
     humidity_sensor:
-      name: Humidity Sesnor
+      name: Humidity Sensor
       description: The Sensor to trigger the fan.
       selector:
         entity:
