@@ -16,8 +16,17 @@ Turns a fan on in high humidity situations, envisioned as a bathroom fan switch.
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Ftrigger_fan_on_high_humidity.yaml)
 
-### Zooz ZEN34 Remote Switch
+### Z-Wave Scene Controller / Remote Switch
 
-Map actions to every button combination on a Zooz ZEN34 remote switch. Supports single tap through 5x tap, hold, and release for both the upper and lower paddles (up to 14 actions total).
+Map actions to button presses on any Z-Wave device that supports Central Scene (Scene 001 / Scene 002). Originally built around the Zooz ZEN34 remote switch, but should work with any compatible Z-Wave device including:
 
-[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fzooz_zen34_remote_switch.yaml)
+- Zooz ZEN34 Remote Switch
+- Zooz ZEN32 Scene Controller (main paddle)
+- Zooz ZEN71/ZEN72/ZEN76/ZEN77 wall switches/dimmers (scene control must be enabled)
+- Inovelli Red/Blue series switches
+- GE/Jasco in-wall switches
+- Aeotec NanoMote and other Z-Wave remotes
+
+Supports single tap through 5x tap, hold, and release for both the upper and lower buttons (up to 14 actions total).
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fzwave_scene_controller_remote.yaml)

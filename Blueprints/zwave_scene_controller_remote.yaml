@@ -1,109 +1,112 @@
 blueprint:
-  name: Zooz ZEN34 Remote Switch
+  name: Z-Wave Scene Controller / Remote Switch
   description: >
-    Map actions to every button combination on a Zooz ZEN34 remote switch.
-    Supports single tap through 5x tap, hold, and release for both the upper
-    and lower paddles (up to 14 actions total). Each action input is optional
-    and defaults to doing nothing. Hold actions repeat on a configurable
-    interval until the paddle is released, making them ideal for smooth
-    brightness ramping.
+    Map actions to button presses on any Z-Wave device that supports Central
+    Scene (Scene 001 / Scene 002). Originally built around the Zooz ZEN34
+    remote switch, but should work with any Z-Wave device that sends Central
+    Scene events with two buttons or paddles. Supports single tap through 5x
+    tap, hold, and release for both the upper and lower buttons (up to 14
+    actions total). Each action input is optional and defaults to doing nothing.
+    Hold actions repeat on a configurable interval until the button is released,
+    making them ideal for smooth brightness ramping.
   domain: automation
   input:
-    zooz_zen34:
-      name: Zooz ZEN34 Remote Switch
-      description: The ZEN34 device to use as a trigger.
+    zwave_device:
+      name: Z-Wave Scene Controller
+      description: >
+        The Z-Wave device to use as a trigger. Select any device that sends
+        Central Scene events (e.g. Zooz ZEN34/ZEN32, Inovelli, GE/Jasco,
+        Aeotec NanoMote, etc.).
       selector:
         device:
           integration: zwave_js
-          manufacturer: Zooz
-          model: ZEN34
     tap_up_1x:
-      name: Upper Paddle Single Tap
-      description: Action to run when the upper paddle is tapped once.
+      name: Upper Button Single Tap
+      description: Action to run when the upper button is tapped once.
       default: []
       selector:
         action: {}
     tap_up_2x:
-      name: Upper Paddle Double Tap
-      description: Action to run when the upper paddle is tapped twice.
+      name: Upper Button Double Tap
+      description: Action to run when the upper button is tapped twice.
       default: []
       selector:
         action: {}
     tap_up_3x:
-      name: Upper Paddle Triple Tap
-      description: Action to run when the upper paddle is tapped three times.
+      name: Upper Button Triple Tap
+      description: Action to run when the upper button is tapped three times.
       default: []
       selector:
         action: {}
     tap_up_4x:
-      name: Upper Paddle 4x Tap
-      description: Action to run when the upper paddle is tapped four times.
+      name: Upper Button 4x Tap
+      description: Action to run when the upper button is tapped four times.
       default: []
       selector:
         action: {}
     tap_up_5x:
-      name: Upper Paddle 5x Tap
-      description: Action to run when the upper paddle is tapped five times.
+      name: Upper Button 5x Tap
+      description: Action to run when the upper button is tapped five times.
       default: []
       selector:
         action: {}
     hold_up:
-      name: Upper Paddle Hold
+      name: Upper Button Hold
       description: >
-        Action to repeat while the upper paddle is held down. Runs on a
-        loop until the paddle is released, useful for gradually increasing
+        Action to repeat while the upper button is held down. Runs on a
+        loop until the button is released, useful for gradually increasing
         brightness.
       default: []
       selector:
         action: {}
     release_up:
-      name: Upper Paddle Release
-      description: Action to run when the upper paddle is released after a hold.
+      name: Upper Button Release
+      description: Action to run when the upper button is released after a hold.
       default: []
       selector:
         action: {}
     tap_down_1x:
-      name: Lower Paddle Single Tap
-      description: Action to run when the lower paddle is tapped once.
+      name: Lower Button Single Tap
+      description: Action to run when the lower button is tapped once.
       default: []
       selector:
         action: {}
     tap_down_2x:
-      name: Lower Paddle Double Tap
-      description: Action to run when the lower paddle is tapped twice.
+      name: Lower Button Double Tap
+      description: Action to run when the lower button is tapped twice.
       default: []
       selector:
         action: {}
     tap_down_3x:
-      name: Lower Paddle Triple Tap
-      description: Action to run when the lower paddle is tapped three times.
+      name: Lower Button Triple Tap
+      description: Action to run when the lower button is tapped three times.
       default: []
       selector:
         action: {}
     tap_down_4x:
-      name: Lower Paddle 4x Tap
-      description: Action to run when the lower paddle is tapped four times.
+      name: Lower Button 4x Tap
+      description: Action to run when the lower button is tapped four times.
       default: []
       selector:
         action: {}
     tap_down_5x:
-      name: Lower Paddle 5x Tap
-      description: Action to run when the lower paddle is tapped five times.
+      name: Lower Button 5x Tap
+      description: Action to run when the lower button is tapped five times.
       default: []
       selector:
         action: {}
     hold_down:
-      name: Lower Paddle Hold
+      name: Lower Button Hold
       description: >
-        Action to repeat while the lower paddle is held down. Runs on a
-        loop until the paddle is released, useful for gradually decreasing
+        Action to repeat while the lower button is held down. Runs on a
+        loop until the button is released, useful for gradually decreasing
         brightness.
       default: []
       selector:
         action: {}
     release_down:
-      name: Lower Paddle Release
-      description: Action to run when the lower paddle is released after a hold.
+      name: Lower Button Release
+      description: Action to run when the lower button is released after a hold.
       default: []
       selector:
         action: {}
@@ -127,7 +130,7 @@ trigger:
   - platform: event
     event_type: zwave_js_value_notification
     event_data:
-      device_id: !input zooz_zen34
+      device_id: !input zwave_device
       command_class_name: Central Scene
 
 action:
@@ -135,7 +138,7 @@ action:
       scene_label: "{{ trigger.event.data.label }}"
       scene_value: "{{ trigger.event.data.value }}"
   - choose:
-      # Upper Paddle (Scene 001)
+      # Upper Button / Paddle (Scene 001)
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed' }}"
         sequence: !input tap_up_1x
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed2x' }}"
@@ -156,7 +159,7 @@ action:
                     milliseconds: !input hold_repeat_interval
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyReleased' }}"
         sequence: !input release_up
-      # Lower Paddle (Scene 002)
+      # Lower Button / Paddle (Scene 002)
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed' }}"
         sequence: !input tap_down_1x
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed2x' }}"
