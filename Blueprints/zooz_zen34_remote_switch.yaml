@@ -1,0 +1,147 @@
+blueprint:
+  name: Zooz ZEN34 Remote Switch
+  description: >
+    Map actions to every button combination on a Zooz ZEN34 remote switch.
+    Supports single tap through 5x tap, hold, and release for both the upper
+    and lower paddles (up to 14 actions total). Each action input is optional
+    and defaults to doing nothing.
+  domain: automation
+  input:
+    zooz_zen34:
+      name: Zooz ZEN34 Remote Switch
+      description: The ZEN34 device to use as a trigger.
+      selector:
+        device:
+          integration: zwave_js
+          manufacturer: Zooz
+          model: ZEN34
+    tap_up_1x:
+      name: Upper Paddle Single Tap
+      description: Action to run when the upper paddle is tapped once.
+      default: []
+      selector:
+        action: {}
+    tap_up_2x:
+      name: Upper Paddle Double Tap
+      description: Action to run when the upper paddle is tapped twice.
+      default: []
+      selector:
+        action: {}
+    tap_up_3x:
+      name: Upper Paddle Triple Tap
+      description: Action to run when the upper paddle is tapped three times.
+      default: []
+      selector:
+        action: {}
+    tap_up_4x:
+      name: Upper Paddle 4x Tap
+      description: Action to run when the upper paddle is tapped four times.
+      default: []
+      selector:
+        action: {}
+    tap_up_5x:
+      name: Upper Paddle 5x Tap
+      description: Action to run when the upper paddle is tapped five times.
+      default: []
+      selector:
+        action: {}
+    hold_up:
+      name: Upper Paddle Hold
+      description: Action to run when the upper paddle is held down.
+      default: []
+      selector:
+        action: {}
+    release_up:
+      name: Upper Paddle Release
+      description: Action to run when the upper paddle is released.
+      default: []
+      selector:
+        action: {}
+    tap_down_1x:
+      name: Lower Paddle Single Tap
+      description: Action to run when the lower paddle is tapped once.
+      default: []
+      selector:
+        action: {}
+    tap_down_2x:
+      name: Lower Paddle Double Tap
+      description: Action to run when the lower paddle is tapped twice.
+      default: []
+      selector:
+        action: {}
+    tap_down_3x:
+      name: Lower Paddle Triple Tap
+      description: Action to run when the lower paddle is tapped three times.
+      default: []
+      selector:
+        action: {}
+    tap_down_4x:
+      name: Lower Paddle 4x Tap
+      description: Action to run when the lower paddle is tapped four times.
+      default: []
+      selector:
+        action: {}
+    tap_down_5x:
+      name: Lower Paddle 5x Tap
+      description: Action to run when the lower paddle is tapped five times.
+      default: []
+      selector:
+        action: {}
+    hold_down:
+      name: Lower Paddle Hold
+      description: Action to run when the lower paddle is held down.
+      default: []
+      selector:
+        action: {}
+    release_down:
+      name: Lower Paddle Release
+      description: Action to run when the lower paddle is released.
+      default: []
+      selector:
+        action: {}
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zooz_zen34
+      command_class_name: Central Scene
+
+action:
+  - variables:
+      scene_label: "{{ trigger.event.data.label }}"
+      scene_value: "{{ trigger.event.data.value }}"
+  - choose:
+      # Upper Paddle (Scene 001)
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed' }}"
+        sequence: !input tap_up_1x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed2x' }}"
+        sequence: !input tap_up_2x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed3x' }}"
+        sequence: !input tap_up_3x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed4x' }}"
+        sequence: !input tap_up_4x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed5x' }}"
+        sequence: !input tap_up_5x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyHeldDown' }}"
+        sequence: !input hold_up
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyReleased' }}"
+        sequence: !input release_up
+      # Lower Paddle (Scene 002)
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed' }}"
+        sequence: !input tap_down_1x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed2x' }}"
+        sequence: !input tap_down_2x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed3x' }}"
+        sequence: !input tap_down_3x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed4x' }}"
+        sequence: !input tap_down_4x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed5x' }}"
+        sequence: !input tap_down_5x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyHeldDown' }}"
+        sequence: !input hold_down
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyReleased' }}"
+        sequence: !input release_down
