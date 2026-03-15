@@ -1,0 +1,58 @@
+blueprint:
+  name: Dimmer Brightness Caster
+  description: >
+    When a dimmer switch changes brightness, cast that brightness
+    level to one or more target lights.
+  domain: automation
+  input:
+    source_dimmer:
+      name: Source Dimmer
+      description: The dimmer switch to follow.
+      selector:
+        entity:
+          domain: light
+    target_lights:
+      name: Target Lights
+      description: The lights that should match the source dimmer's brightness.
+      selector:
+        target:
+          entity:
+            domain: light
+    transition_time:
+      name: Transition Time
+      description: Transition time in seconds for the target lights.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 10
+          step: 0.5
+          unit_of_measurement: seconds
+
+trigger:
+  - platform: state
+    entity_id: !input source_dimmer
+    attribute: brightness
+
+condition:
+  - condition: template
+    value_template: >
+      {{ trigger.to_state.state == 'on' and
+         trigger.to_state.attributes.brightness is defined and
+         trigger.from_state.attributes.brightness != trigger.to_state.attributes.brightness }}
+
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: !input source_dimmer
+            state: "on"
+        sequence:
+          - service: light.turn_on
+            target: !input target_lights
+            data:
+              brightness: "{{ state_attr(trigger.entity_id, 'brightness') }}"
+              transition: !input transition_time
+    default:
+      - service: light.turn_off
+        target: !input target_lights
