@@ -4,7 +4,9 @@ blueprint:
     Map actions to every button combination on a Zooz ZEN34 remote switch.
     Supports single tap through 5x tap, hold, and release for both the upper
     and lower paddles (up to 14 actions total). Each action input is optional
-    and defaults to doing nothing.
+    and defaults to doing nothing. Hold actions repeat on a configurable
+    interval until the paddle is released, making them ideal for smooth
+    brightness ramping.
   domain: automation
   input:
     zooz_zen34:
@@ -47,13 +49,16 @@ blueprint:
         action: {}
     hold_up:
       name: Upper Paddle Hold
-      description: Action to run when the upper paddle is held down.
+      description: >
+        Action to repeat while the upper paddle is held down. Runs on a
+        loop until the paddle is released, useful for gradually increasing
+        brightness.
       default: []
       selector:
         action: {}
     release_up:
       name: Upper Paddle Release
-      description: Action to run when the upper paddle is released.
+      description: Action to run when the upper paddle is released after a hold.
       default: []
       selector:
         action: {}
@@ -89,18 +94,33 @@ blueprint:
         action: {}
     hold_down:
       name: Lower Paddle Hold
-      description: Action to run when the lower paddle is held down.
+      description: >
+        Action to repeat while the lower paddle is held down. Runs on a
+        loop until the paddle is released, useful for gradually decreasing
+        brightness.
       default: []
       selector:
         action: {}
     release_down:
       name: Lower Paddle Release
-      description: Action to run when the lower paddle is released.
+      description: Action to run when the lower paddle is released after a hold.
       default: []
       selector:
         action: {}
+    hold_repeat_interval:
+      name: Hold Repeat Interval
+      description: >
+        Time in milliseconds between each repeat of the hold action.
+        Lower values make brightness changes faster.
+      default: 500
+      selector:
+        number:
+          min: 100
+          max: 2000
+          step: 100
+          unit_of_measurement: ms
 
-mode: single
+mode: restart
 max_exceeded: silent
 
 trigger:
@@ -127,7 +147,13 @@ action:
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed5x' }}"
         sequence: !input tap_up_5x
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyHeldDown' }}"
-        sequence: !input hold_up
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - !input hold_up
+                - delay:
+                    milliseconds: !input hold_repeat_interval
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyReleased' }}"
         sequence: !input release_up
       # Lower Paddle (Scene 002)
@@ -142,6 +168,12 @@ action:
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed5x' }}"
         sequence: !input tap_down_5x
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyHeldDown' }}"
-        sequence: !input hold_down
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - !input hold_down
+                - delay:
+                    milliseconds: !input hold_repeat_interval
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyReleased' }}"
         sequence: !input release_down
