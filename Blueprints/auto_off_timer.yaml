@@ -1,0 +1,40 @@
+blueprint:
+  name: Auto Off Timer
+  description: >
+    Automatically turns off a light or switch after a specified number of
+    seconds. If the entity is turned on again while the timer is running, the
+    timer restarts.
+  domain: automation
+  input:
+    target_entity:
+      name: Light or Switch
+      description: The light or switch to automatically turn off.
+      selector:
+        entity:
+          domain:
+            - light
+            - switch
+    off_delay:
+      name: Off Delay
+      description: Time in seconds before the entity is turned off.
+      default: 300
+      selector:
+        number:
+          min: 1
+          max: 86400
+          unit_of_measurement: seconds
+          mode: box
+
+trigger:
+  - platform: state
+    entity_id: !input target_entity
+    to: "on"
+
+action:
+  - delay:
+      seconds: !input off_delay
+  - service: homeassistant.turn_off
+    target:
+      entity_id: !input target_entity
+
+mode: restart
