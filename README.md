@@ -18,7 +18,7 @@ Turns a fan on in high humidity situations, envisioned as a bathroom fan switch.
 
 ### Auto Off Timer
 
-Automatically turns off a light or switch after a configurable number of seconds. If the entity is turned on again (or "on" is pressed while already on), the timer restarts — great for bathroom lights, closet lights, or any switch that should turn itself off.
+Automatically turns off a light or switch after a configurable number of seconds. If the entity is turned on again while the timer is running, the timer restarts — great for bathroom lights, closet lights, or any switch that should turn itself off.
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fauto_off_timer.yaml)
 

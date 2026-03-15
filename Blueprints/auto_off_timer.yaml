@@ -2,8 +2,8 @@ blueprint:
   name: Auto Off Timer
   description: >
     Automatically turns off a light or switch after a specified number of
-    seconds. If the entity is turned on again (or "on" is pressed while
-    already on), the timer restarts.
+    seconds. If the entity is turned on again while the timer is running, the
+    timer restarts.
   domain: automation
   input:
     target_entity:
@@ -28,11 +28,7 @@ blueprint:
 trigger:
   - platform: state
     entity_id: !input target_entity
-
-condition:
-  - condition: state
-    entity_id: !input target_entity
-    state: "on"
+    to: "on"
 
 action:
   - delay:
