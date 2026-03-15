@@ -16,6 +16,12 @@ Turns a fan on in high humidity situations, envisioned as a bathroom fan switch.
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Ftrigger_fan_on_high_humidity.yaml)
 
+### Auto Off Timer
+
+Automatically turns off a light or switch after a configurable number of seconds. If the entity is turned on again (or "on" is pressed while already on), the timer restarts — great for bathroom lights, closet lights, or any switch that should turn itself off.
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fauto_off_timer.yaml)
+
 ### Z-Wave Scene Controller / Remote Switch
 
 Map actions to button presses on any Z-Wave device that supports Central Scene (Scene 001 / Scene 002). Originally built around the Zooz ZEN34 remote switch, but should work with any compatible Z-Wave device including:
