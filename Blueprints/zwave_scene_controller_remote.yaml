@@ -133,12 +133,6 @@ trigger:
       device_id: !input zwave_device
       command_class_name: Central Scene
 
-condition:
-  - condition: template
-    value_template: >
-      {{ trigger.event.data.value not in ['KeyHeldDown', 'KeyReleased']
-         or state_attr(this.entity_id, 'current') == 0 }}
-
 action:
   - variables:
       scene_label: "{{ trigger.event.data.label }}"
@@ -154,36 +148,20 @@ action:
                   device_id: !input zwave_device
                   command_class_name: Central Scene
                   value: KeyHeldDown
-              - platform: event
-                event_type: zwave_js_value_notification
-                event_data:
-                  device_id: !input zwave_device
-                  command_class_name: Central Scene
-                  value: KeyReleased
             timeout:
-              seconds: 5
+              milliseconds: 2000
             continue_on_timeout: true
           - choose:
-              - conditions: "{{ wait.trigger is not none and wait.trigger.event.data.value == 'KeyHeldDown' }}"
+              - conditions: "{{ wait.trigger is not none }}"
                 sequence:
                   - repeat:
+                      count: 100
                       sequence:
                         - choose:
                             - conditions: "{{ true }}"
                               sequence: !input hold_up
-                        - wait_for_trigger:
-                            - platform: event
-                              event_type: zwave_js_value_notification
-                              event_data:
-                                device_id: !input zwave_device
-                                command_class_name: Central Scene
-                                value: KeyReleased
-                          timeout:
+                        - delay:
                             milliseconds: !input hold_repeat_interval
-                          continue_on_timeout: true
-                      until:
-                        - condition: template
-                          value_template: "{{ wait.trigger is not none }}"
                   - choose:
                       - conditions: "{{ true }}"
                         sequence: !input release_up
@@ -194,23 +172,13 @@ action:
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyHeldDown' }}"
         sequence:
           - repeat:
+              count: 100
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
                       sequence: !input hold_up
-                - wait_for_trigger:
-                    - platform: event
-                      event_type: zwave_js_value_notification
-                      event_data:
-                        device_id: !input zwave_device
-                        command_class_name: Central Scene
-                        value: KeyReleased
-                  timeout:
+                - delay:
                     milliseconds: !input hold_repeat_interval
-                  continue_on_timeout: true
-              until:
-                - condition: template
-                  value_template: "{{ wait.trigger is not none }}"
           - choose:
               - conditions: "{{ true }}"
                 sequence: !input release_up
@@ -234,36 +202,20 @@ action:
                   device_id: !input zwave_device
                   command_class_name: Central Scene
                   value: KeyHeldDown
-              - platform: event
-                event_type: zwave_js_value_notification
-                event_data:
-                  device_id: !input zwave_device
-                  command_class_name: Central Scene
-                  value: KeyReleased
             timeout:
-              seconds: 5
+              milliseconds: 2000
             continue_on_timeout: true
           - choose:
-              - conditions: "{{ wait.trigger is not none and wait.trigger.event.data.value == 'KeyHeldDown' }}"
+              - conditions: "{{ wait.trigger is not none }}"
                 sequence:
                   - repeat:
+                      count: 100
                       sequence:
                         - choose:
                             - conditions: "{{ true }}"
                               sequence: !input hold_down
-                        - wait_for_trigger:
-                            - platform: event
-                              event_type: zwave_js_value_notification
-                              event_data:
-                                device_id: !input zwave_device
-                                command_class_name: Central Scene
-                                value: KeyReleased
-                          timeout:
+                        - delay:
                             milliseconds: !input hold_repeat_interval
-                          continue_on_timeout: true
-                      until:
-                        - condition: template
-                          value_template: "{{ wait.trigger is not none }}"
                   - choose:
                       - conditions: "{{ true }}"
                         sequence: !input release_down
@@ -274,23 +226,13 @@ action:
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyHeldDown' }}"
         sequence:
           - repeat:
+              count: 100
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
                       sequence: !input hold_down
-                - wait_for_trigger:
-                    - platform: event
-                      event_type: zwave_js_value_notification
-                      event_data:
-                        device_id: !input zwave_device
-                        command_class_name: Central Scene
-                        value: KeyReleased
-                  timeout:
+                - delay:
                     milliseconds: !input hold_repeat_interval
-                  continue_on_timeout: true
-              until:
-                - condition: template
-                  value_template: "{{ wait.trigger is not none }}"
           - choose:
               - conditions: "{{ true }}"
                 sequence: !input release_down
