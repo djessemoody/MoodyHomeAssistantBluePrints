@@ -133,10 +133,6 @@ trigger:
       device_id: !input zwave_device
       command_class_name: Central Scene
 
-condition:
-  - condition: template
-    value_template: "{{ trigger.event.data.value != 'KeyHeldDown' }}"
-
 action:
   - variables:
       scene_label: "{{ trigger.event.data.label }}"
@@ -170,6 +166,16 @@ action:
               - choose:
                   - conditions: "{{ true }}"
                     sequence: !input tap_up_1x
+      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyHeldDown' }}"
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input hold_up
+                - delay:
+                    milliseconds: !input hold_repeat_interval
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed2x' }}"
         sequence: !input tap_up_2x
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed3x' }}"
@@ -208,6 +214,16 @@ action:
               - choose:
                   - conditions: "{{ true }}"
                     sequence: !input tap_down_1x
+      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyHeldDown' }}"
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input hold_down
+                - delay:
+                    milliseconds: !input hold_repeat_interval
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed2x' }}"
         sequence: !input tap_down_2x
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed3x' }}"
