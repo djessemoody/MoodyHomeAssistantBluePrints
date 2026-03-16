@@ -127,122 +127,192 @@ mode: restart
 max_exceeded: silent
 
 trigger:
+  # Upper Button / Paddle (Scene 001)
   - platform: event
     event_type: zwave_js_value_notification
     event_data:
       device_id: !input zwave_device
-      command_class_name: Central Scene
+      label: Scene 001
+      value: KeyPressed
+    id: tap_up
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed2x
+    id: tap_up_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed3x
+    id: tap_up_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed4x
+    id: tap_up_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed5x
+    id: tap_up_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyHeldDown
+    id: hold_up
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyReleased
+    id: release_up
+  # Lower Button / Paddle (Scene 002)
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed
+    id: tap_down
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed2x
+    id: tap_down_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed3x
+    id: tap_down_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed4x
+    id: tap_down_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed5x
+    id: tap_down_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyHeldDown
+    id: hold_down
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyReleased
+    id: release_down
 
 action:
-  - variables:
-      scene_label: "{{ trigger.event.data.label }}"
-      scene_value: "{{ trigger.event.data.value }}"
   - choose:
-      # Upper Button / Paddle (Scene 001)
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed' }}"
-        sequence:
-          - wait_for_trigger:
-              - platform: event
-                event_type: zwave_js_value_notification
-                event_data:
-                  device_id: !input zwave_device
-                  command_class_name: Central Scene
-                  value: KeyHeldDown
-            timeout:
-              milliseconds: 2000
-            continue_on_timeout: true
-          - choose:
-              - conditions: "{{ wait.trigger is not none }}"
-                sequence:
-                  - repeat:
-                      count: 100
-                      sequence:
-                        - choose:
-                            - conditions: "{{ true }}"
-                              sequence: !input hold_up
-                        - delay:
-                            milliseconds: !input hold_repeat_interval
-                  - choose:
-                      - conditions: "{{ true }}"
-                        sequence: !input release_up
-            default:
-              - choose:
-                  - conditions: "{{ true }}"
-                    sequence: !input tap_up_1x
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyHeldDown' }}"
+      # Upper Button Taps
+      - conditions:
+          - condition: trigger
+            id: tap_up
+        sequence: !input tap_up_1x
+      - conditions:
+          - condition: trigger
+            id: tap_up_2x
+        sequence: !input tap_up_2x
+      - conditions:
+          - condition: trigger
+            id: tap_up_3x
+        sequence: !input tap_up_3x
+      - conditions:
+          - condition: trigger
+            id: tap_up_4x
+        sequence: !input tap_up_4x
+      - conditions:
+          - condition: trigger
+            id: tap_up_5x
+        sequence: !input tap_up_5x
+      # Upper Button Hold
+      - conditions:
+          - condition: trigger
+            id: hold_up
         sequence:
           - repeat:
-              count: 100
+              until:
+                - condition: not
+                  conditions:
+                    - condition: trigger
+                      id: hold_up
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
                       sequence: !input hold_up
                 - delay:
                     milliseconds: !input hold_repeat_interval
-          - choose:
-              - conditions: "{{ true }}"
-                sequence: !input release_up
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed2x' }}"
-        sequence: !input tap_up_2x
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed3x' }}"
-        sequence: !input tap_up_3x
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed4x' }}"
-        sequence: !input tap_up_4x
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed5x' }}"
-        sequence: !input tap_up_5x
-      - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyReleased' }}"
+      # Upper Button Release
+      - conditions:
+          - condition: trigger
+            id: release_up
         sequence: !input release_up
-      # Lower Button / Paddle (Scene 002)
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed' }}"
-        sequence:
-          - wait_for_trigger:
-              - platform: event
-                event_type: zwave_js_value_notification
-                event_data:
-                  device_id: !input zwave_device
-                  command_class_name: Central Scene
-                  value: KeyHeldDown
-            timeout:
-              milliseconds: 2000
-            continue_on_timeout: true
-          - choose:
-              - conditions: "{{ wait.trigger is not none }}"
-                sequence:
-                  - repeat:
-                      count: 100
-                      sequence:
-                        - choose:
-                            - conditions: "{{ true }}"
-                              sequence: !input hold_down
-                        - delay:
-                            milliseconds: !input hold_repeat_interval
-                  - choose:
-                      - conditions: "{{ true }}"
-                        sequence: !input release_down
-            default:
-              - choose:
-                  - conditions: "{{ true }}"
-                    sequence: !input tap_down_1x
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyHeldDown' }}"
+      # Lower Button Taps
+      - conditions:
+          - condition: trigger
+            id: tap_down
+        sequence: !input tap_down_1x
+      - conditions:
+          - condition: trigger
+            id: tap_down_2x
+        sequence: !input tap_down_2x
+      - conditions:
+          - condition: trigger
+            id: tap_down_3x
+        sequence: !input tap_down_3x
+      - conditions:
+          - condition: trigger
+            id: tap_down_4x
+        sequence: !input tap_down_4x
+      - conditions:
+          - condition: trigger
+            id: tap_down_5x
+        sequence: !input tap_down_5x
+      # Lower Button Hold
+      - conditions:
+          - condition: trigger
+            id: hold_down
         sequence:
           - repeat:
-              count: 100
+              until:
+                - condition: not
+                  conditions:
+                    - condition: trigger
+                      id: hold_down
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
                       sequence: !input hold_down
                 - delay:
                     milliseconds: !input hold_repeat_interval
-          - choose:
-              - conditions: "{{ true }}"
-                sequence: !input release_down
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed2x' }}"
-        sequence: !input tap_down_2x
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed3x' }}"
-        sequence: !input tap_down_3x
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed4x' }}"
-        sequence: !input tap_down_4x
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed5x' }}"
-        sequence: !input tap_down_5x
-      - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyReleased' }}"
+      # Lower Button Release
+      - conditions:
+          - condition: trigger
+            id: release_down
         sequence: !input release_down
