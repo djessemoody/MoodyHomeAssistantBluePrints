@@ -151,10 +151,9 @@ action:
                 event_data:
                   device_id: !input zwave_device
                   command_class_name: Central Scene
-                  label: "Scene 001"
                   value: KeyHeldDown
             timeout:
-              milliseconds: 300
+              milliseconds: 500
             continue_on_timeout: true
           - choose:
               - conditions: "{{ wait.trigger is not none }}"
@@ -190,10 +189,9 @@ action:
                 event_data:
                   device_id: !input zwave_device
                   command_class_name: Central Scene
-                  label: "Scene 002"
                   value: KeyHeldDown
             timeout:
-              milliseconds: 300
+              milliseconds: 500
             continue_on_timeout: true
           - choose:
               - conditions: "{{ wait.trigger is not none }}"
