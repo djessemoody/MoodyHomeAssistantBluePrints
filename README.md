@@ -50,3 +50,9 @@ Clears lock user codes from a range of code slots across one or more Z-Wave lock
 Sets a user code on a specific code slot across one or more Z-Wave locks. Useful for programming the same guest or family code on multiple doors at once.
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fset_lock_code.yaml)
+
+### Lock All Doors
+
+Locks one or more door locks at once. Useful for a "goodnight" or "leaving home" routine.
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Flock_all_doors.yaml)
