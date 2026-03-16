@@ -140,7 +140,12 @@ action:
   - choose:
       # Upper Button / Paddle (Scene 001)
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed' }}"
-        sequence: !input tap_up_1x
+        sequence:
+          - delay:
+              milliseconds: 300
+          - choose:
+              - conditions: "{{ true }}"
+                sequence: !input tap_up_1x
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed2x' }}"
         sequence: !input tap_up_2x
       - conditions: "{{ scene_label == 'Scene 001' and scene_value == 'KeyPressed3x' }}"
@@ -163,7 +168,12 @@ action:
         sequence: !input release_up
       # Lower Button / Paddle (Scene 002)
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed' }}"
-        sequence: !input tap_down_1x
+        sequence:
+          - delay:
+              milliseconds: 300
+          - choose:
+              - conditions: "{{ true }}"
+                sequence: !input tap_down_1x
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed2x' }}"
         sequence: !input tap_down_2x
       - conditions: "{{ scene_label == 'Scene 002' and scene_value == 'KeyPressed3x' }}"
