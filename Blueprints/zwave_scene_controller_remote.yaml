@@ -133,6 +133,12 @@ trigger:
       device_id: !input zwave_device
       command_class_name: Central Scene
 
+condition:
+  - condition: template
+    value_template: >
+      {{ trigger.event.data.value != 'KeyHeldDown'
+         or state_attr(this.entity_id, 'current') == 0 }}
+
 action:
   - variables:
       scene_label: "{{ trigger.event.data.label }}"
