@@ -257,11 +257,7 @@ action:
             id: hold_up
         sequence:
           - repeat:
-              until:
-                - condition: not
-                  conditions:
-                    - condition: trigger
-                      id: hold_up
+              count: 100
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
@@ -300,11 +296,7 @@ action:
             id: hold_down
         sequence:
           - repeat:
-              until:
-                - condition: not
-                  conditions:
-                    - condition: trigger
-                      id: hold_down
+              count: 100
               sequence:
                 - choose:
                     - conditions: "{{ true }}"
