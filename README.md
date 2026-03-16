@@ -1,8 +1,8 @@
 # Moody Home Assistant Blueprints
 
-A collection of Home Assistant automation blueprints.
+A collection of Home Assistant automation and script blueprints.
 
-## Blueprints
+## Automation Blueprints
 
 ### Dimmer Brightness Caster
 
@@ -36,3 +36,17 @@ Map actions to button presses on any Z-Wave device that supports Central Scene (
 Supports single tap through 5x tap, hold, and release for both the upper and lower buttons (up to 14 actions total).
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fzwave_scene_controller_remote.yaml)
+
+## Script Blueprints
+
+### Clear All Lock Codes
+
+Clears lock user codes from a range of code slots across one or more Z-Wave locks. Useful for bulk-resetting guest codes or wiping all programmed codes at once.
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fclear_lock_codes.yaml)
+
+### Set Lock Code
+
+Sets a user code on a specific code slot across one or more Z-Wave locks. Useful for programming the same guest or family code on multiple doors at once.
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fset_lock_code.yaml)

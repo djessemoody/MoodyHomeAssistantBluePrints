@@ -1,0 +1,41 @@
+blueprint:
+  name: Set Lock Code
+  description: >
+    Sets a user code on a specific code slot across one or more Z-Wave locks.
+    Useful for programming the same guest or family code on multiple doors
+    at once.
+  domain: script
+  input:
+    locks:
+      name: Locks
+      description: The locks to set the code on.
+      selector:
+        entity:
+          domain: lock
+          multiple: true
+    code_slot:
+      name: Code Slot
+      description: The code slot number to program.
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 999
+          mode: box
+    user_code:
+      name: User Code
+      description: The PIN code to set (typically 4-8 digits).
+      selector:
+        text:
+          type: password
+
+sequence:
+  - repeat:
+      for_each: "{{ locks }}"
+      sequence:
+        - service: zwave_js.set_lock_usercode
+          target:
+            entity_id: "{{ repeat.item }}"
+          data:
+            code_slot: !input code_slot
+            usercode: !input user_code
