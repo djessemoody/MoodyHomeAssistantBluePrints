@@ -1,0 +1,19 @@
+blueprint:
+  name: Lock All Doors
+  description: >
+    Locks one or more door locks at once. Useful for a "goodnight" or
+    "leaving home" routine.
+  domain: script
+  input:
+    locks:
+      name: Locks
+      description: The locks to lock.
+      selector:
+        entity:
+          domain: lock
+          multiple: true
+
+sequence:
+  - service: lock.lock
+    target:
+      entity_id: !input locks

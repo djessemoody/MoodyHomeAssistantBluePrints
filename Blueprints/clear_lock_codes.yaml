@@ -1,0 +1,48 @@
+blueprint:
+  name: Clear All Lock Codes
+  description: >
+    Clears lock user codes from a range of code slots across one or more
+    Z-Wave locks. Useful for bulk-resetting guest codes or wiping all
+    programmed codes at once.
+  domain: script
+  input:
+    locks:
+      name: Locks
+      description: The locks to clear codes from.
+      selector:
+        entity:
+          domain: lock
+          multiple: true
+    start_slot:
+      name: Start Code Slot
+      description: The first code slot to clear.
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 999
+          mode: box
+    end_slot:
+      name: End Code Slot
+      description: The last code slot to clear (inclusive).
+      default: 30
+      selector:
+        number:
+          min: 1
+          max: 999
+          mode: box
+
+sequence:
+  - repeat:
+      for_each: "{{ locks }}"
+      sequence:
+        - variables:
+            current_lock: "{{ repeat.item }}"
+        - repeat:
+            count: "{{ end_slot - start_slot + 1 }}"
+            sequence:
+              - service: zwave_js.clear_lock_usercode
+                target:
+                  entity_id: "{{ current_lock }}"
+                data:
+                  code_slot: "{{ start_slot + repeat.index - 1 }}"
