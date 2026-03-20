@@ -37,6 +37,12 @@ Supports single tap through 5x tap, hold, and release for both the upper and low
 
 [![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fzwave_scene_controller_remote.yaml)
 
+### Z-Wave 4-Button Scene Controller
+
+Map actions to button presses on a Z-Wave 4-button scene controller such as the Zooz ZEN37 Wall Remote. Works with any Z-Wave device that sends Central Scene events on Scene 001 through Scene 004. Supports single tap through 5x tap, hold, and release for all four buttons (up to 28 actions total).
+
+[![Open your Home Assistant instance and show the blueprint import dialog with this blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fdjessemoody%2FMoodyHomeAssistantBluePrints%2Fblob%2Fmain%2FBlueprints%2Fzwave_4button_scene_controller.yaml)
+
 ## Script Blueprints
 
 ### Clear All Lock Codes

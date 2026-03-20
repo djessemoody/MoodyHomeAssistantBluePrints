@@ -1,0 +1,576 @@
+blueprint:
+  name: Z-Wave 4-Button Scene Controller
+  description: >
+    Map actions to button presses on a Z-Wave 4-button scene controller such as
+    the Zooz ZEN37 Wall Remote. Works with any Z-Wave device that sends Central
+    Scene events on Scene 001 through Scene 004. Supports single tap through 5x
+    tap, hold, and release for all four buttons (up to 28 actions total). Each
+    action input is optional and defaults to doing nothing. Hold actions repeat
+    on a configurable interval until the button is released, making them ideal
+    for smooth brightness ramping.
+  domain: automation
+  input:
+    zwave_device:
+      name: Z-Wave 4-Button Scene Controller
+      description: >
+        The Z-Wave device to use as a trigger. Select any device that sends
+        Central Scene events on four scenes (e.g. Zooz ZEN37).
+      selector:
+        device:
+          integration: zwave_js
+    # Button 1 (Scene 001)
+    btn1_tap_1x:
+      name: Button 1 Single Tap
+      description: Action to run when Button 1 is tapped once.
+      default: []
+      selector:
+        action: {}
+    btn1_tap_2x:
+      name: Button 1 Double Tap
+      description: Action to run when Button 1 is tapped twice.
+      default: []
+      selector:
+        action: {}
+    btn1_tap_3x:
+      name: Button 1 Triple Tap
+      description: Action to run when Button 1 is tapped three times.
+      default: []
+      selector:
+        action: {}
+    btn1_tap_4x:
+      name: Button 1 4x Tap
+      description: Action to run when Button 1 is tapped four times.
+      default: []
+      selector:
+        action: {}
+    btn1_tap_5x:
+      name: Button 1 5x Tap
+      description: Action to run when Button 1 is tapped five times.
+      default: []
+      selector:
+        action: {}
+    btn1_hold:
+      name: Button 1 Hold
+      description: >
+        Action to repeat while Button 1 is held down. Runs on a loop until
+        the button is released.
+      default: []
+      selector:
+        action: {}
+    btn1_release:
+      name: Button 1 Release
+      description: Action to run when Button 1 is released after a hold.
+      default: []
+      selector:
+        action: {}
+    # Button 2 (Scene 002)
+    btn2_tap_1x:
+      name: Button 2 Single Tap
+      description: Action to run when Button 2 is tapped once.
+      default: []
+      selector:
+        action: {}
+    btn2_tap_2x:
+      name: Button 2 Double Tap
+      description: Action to run when Button 2 is tapped twice.
+      default: []
+      selector:
+        action: {}
+    btn2_tap_3x:
+      name: Button 2 Triple Tap
+      description: Action to run when Button 2 is tapped three times.
+      default: []
+      selector:
+        action: {}
+    btn2_tap_4x:
+      name: Button 2 4x Tap
+      description: Action to run when Button 2 is tapped four times.
+      default: []
+      selector:
+        action: {}
+    btn2_tap_5x:
+      name: Button 2 5x Tap
+      description: Action to run when Button 2 is tapped five times.
+      default: []
+      selector:
+        action: {}
+    btn2_hold:
+      name: Button 2 Hold
+      description: >
+        Action to repeat while Button 2 is held down. Runs on a loop until
+        the button is released.
+      default: []
+      selector:
+        action: {}
+    btn2_release:
+      name: Button 2 Release
+      description: Action to run when Button 2 is released after a hold.
+      default: []
+      selector:
+        action: {}
+    # Button 3 (Scene 003)
+    btn3_tap_1x:
+      name: Button 3 Single Tap
+      description: Action to run when Button 3 is tapped once.
+      default: []
+      selector:
+        action: {}
+    btn3_tap_2x:
+      name: Button 3 Double Tap
+      description: Action to run when Button 3 is tapped twice.
+      default: []
+      selector:
+        action: {}
+    btn3_tap_3x:
+      name: Button 3 Triple Tap
+      description: Action to run when Button 3 is tapped three times.
+      default: []
+      selector:
+        action: {}
+    btn3_tap_4x:
+      name: Button 3 4x Tap
+      description: Action to run when Button 3 is tapped four times.
+      default: []
+      selector:
+        action: {}
+    btn3_tap_5x:
+      name: Button 3 5x Tap
+      description: Action to run when Button 3 is tapped five times.
+      default: []
+      selector:
+        action: {}
+    btn3_hold:
+      name: Button 3 Hold
+      description: >
+        Action to repeat while Button 3 is held down. Runs on a loop until
+        the button is released.
+      default: []
+      selector:
+        action: {}
+    btn3_release:
+      name: Button 3 Release
+      description: Action to run when Button 3 is released after a hold.
+      default: []
+      selector:
+        action: {}
+    # Button 4 (Scene 004)
+    btn4_tap_1x:
+      name: Button 4 Single Tap
+      description: Action to run when Button 4 is tapped once.
+      default: []
+      selector:
+        action: {}
+    btn4_tap_2x:
+      name: Button 4 Double Tap
+      description: Action to run when Button 4 is tapped twice.
+      default: []
+      selector:
+        action: {}
+    btn4_tap_3x:
+      name: Button 4 Triple Tap
+      description: Action to run when Button 4 is tapped three times.
+      default: []
+      selector:
+        action: {}
+    btn4_tap_4x:
+      name: Button 4 4x Tap
+      description: Action to run when Button 4 is tapped four times.
+      default: []
+      selector:
+        action: {}
+    btn4_tap_5x:
+      name: Button 4 5x Tap
+      description: Action to run when Button 4 is tapped five times.
+      default: []
+      selector:
+        action: {}
+    btn4_hold:
+      name: Button 4 Hold
+      description: >
+        Action to repeat while Button 4 is held down. Runs on a loop until
+        the button is released.
+      default: []
+      selector:
+        action: {}
+    btn4_release:
+      name: Button 4 Release
+      description: Action to run when Button 4 is released after a hold.
+      default: []
+      selector:
+        action: {}
+    hold_repeat_interval:
+      name: Hold Repeat Interval
+      description: >
+        Time in milliseconds between each repeat of the hold action.
+        Lower values make brightness changes faster.
+      default: 500
+      selector:
+        number:
+          min: 100
+          max: 2000
+          step: 100
+          unit_of_measurement: ms
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  # Button 1 (Scene 001)
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed
+    id: btn1_tap
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed2x
+    id: btn1_tap_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed3x
+    id: btn1_tap_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed4x
+    id: btn1_tap_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyPressed5x
+    id: btn1_tap_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyHeldDown
+    id: btn1_hold
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 001
+      value: KeyReleased
+    id: btn1_release
+  # Button 2 (Scene 002)
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed
+    id: btn2_tap
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed2x
+    id: btn2_tap_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed3x
+    id: btn2_tap_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed4x
+    id: btn2_tap_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyPressed5x
+    id: btn2_tap_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyHeldDown
+    id: btn2_hold
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 002
+      value: KeyReleased
+    id: btn2_release
+  # Button 3 (Scene 003)
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyPressed
+    id: btn3_tap
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyPressed2x
+    id: btn3_tap_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyPressed3x
+    id: btn3_tap_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyPressed4x
+    id: btn3_tap_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyPressed5x
+    id: btn3_tap_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyHeldDown
+    id: btn3_hold
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 003
+      value: KeyReleased
+    id: btn3_release
+  # Button 4 (Scene 004)
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyPressed
+    id: btn4_tap
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyPressed2x
+    id: btn4_tap_2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyPressed3x
+    id: btn4_tap_3x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyPressed4x
+    id: btn4_tap_4x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyPressed5x
+    id: btn4_tap_5x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyHeldDown
+    id: btn4_hold
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      device_id: !input zwave_device
+      label: Scene 004
+      value: KeyReleased
+    id: btn4_release
+
+action:
+  - choose:
+      # Button 1 Taps
+      - conditions:
+          - condition: trigger
+            id: btn1_tap
+        sequence: !input btn1_tap_1x
+      - conditions:
+          - condition: trigger
+            id: btn1_tap_2x
+        sequence: !input btn1_tap_2x
+      - conditions:
+          - condition: trigger
+            id: btn1_tap_3x
+        sequence: !input btn1_tap_3x
+      - conditions:
+          - condition: trigger
+            id: btn1_tap_4x
+        sequence: !input btn1_tap_4x
+      - conditions:
+          - condition: trigger
+            id: btn1_tap_5x
+        sequence: !input btn1_tap_5x
+      # Button 1 Hold
+      - conditions:
+          - condition: trigger
+            id: btn1_hold
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input btn1_hold
+                - delay:
+                    milliseconds: !input hold_repeat_interval
+      # Button 1 Release
+      - conditions:
+          - condition: trigger
+            id: btn1_release
+        sequence: !input btn1_release
+      # Button 2 Taps
+      - conditions:
+          - condition: trigger
+            id: btn2_tap
+        sequence: !input btn2_tap_1x
+      - conditions:
+          - condition: trigger
+            id: btn2_tap_2x
+        sequence: !input btn2_tap_2x
+      - conditions:
+          - condition: trigger
+            id: btn2_tap_3x
+        sequence: !input btn2_tap_3x
+      - conditions:
+          - condition: trigger
+            id: btn2_tap_4x
+        sequence: !input btn2_tap_4x
+      - conditions:
+          - condition: trigger
+            id: btn2_tap_5x
+        sequence: !input btn2_tap_5x
+      # Button 2 Hold
+      - conditions:
+          - condition: trigger
+            id: btn2_hold
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input btn2_hold
+                - delay:
+                    milliseconds: !input hold_repeat_interval
+      # Button 2 Release
+      - conditions:
+          - condition: trigger
+            id: btn2_release
+        sequence: !input btn2_release
+      # Button 3 Taps
+      - conditions:
+          - condition: trigger
+            id: btn3_tap
+        sequence: !input btn3_tap_1x
+      - conditions:
+          - condition: trigger
+            id: btn3_tap_2x
+        sequence: !input btn3_tap_2x
+      - conditions:
+          - condition: trigger
+            id: btn3_tap_3x
+        sequence: !input btn3_tap_3x
+      - conditions:
+          - condition: trigger
+            id: btn3_tap_4x
+        sequence: !input btn3_tap_4x
+      - conditions:
+          - condition: trigger
+            id: btn3_tap_5x
+        sequence: !input btn3_tap_5x
+      # Button 3 Hold
+      - conditions:
+          - condition: trigger
+            id: btn3_hold
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input btn3_hold
+                - delay:
+                    milliseconds: !input hold_repeat_interval
+      # Button 3 Release
+      - conditions:
+          - condition: trigger
+            id: btn3_release
+        sequence: !input btn3_release
+      # Button 4 Taps
+      - conditions:
+          - condition: trigger
+            id: btn4_tap
+        sequence: !input btn4_tap_1x
+      - conditions:
+          - condition: trigger
+            id: btn4_tap_2x
+        sequence: !input btn4_tap_2x
+      - conditions:
+          - condition: trigger
+            id: btn4_tap_3x
+        sequence: !input btn4_tap_3x
+      - conditions:
+          - condition: trigger
+            id: btn4_tap_4x
+        sequence: !input btn4_tap_4x
+      - conditions:
+          - condition: trigger
+            id: btn4_tap_5x
+        sequence: !input btn4_tap_5x
+      # Button 4 Hold
+      - conditions:
+          - condition: trigger
+            id: btn4_hold
+        sequence:
+          - repeat:
+              count: 100
+              sequence:
+                - choose:
+                    - conditions: "{{ true }}"
+                      sequence: !input btn4_hold
+                - delay:
+                    milliseconds: !input hold_repeat_interval
+      # Button 4 Release
+      - conditions:
+          - condition: trigger
+            id: btn4_release
+        sequence: !input btn4_release
